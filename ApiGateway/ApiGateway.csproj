@@ -9,6 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Configs\appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Configs\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
