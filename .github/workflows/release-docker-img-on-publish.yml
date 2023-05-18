@@ -1,0 +1,33 @@
+name: Release Docker Image On Release Published
+
+on:
+  release:
+    types: [published]
+    
+jobs:
+
+  publish_linux_image:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
+    - name: Build the Docker Image
+      run: docker build . --file ApiGateway/Dockerfile --tag ${{secrets.DOCKER_USER}}/apigateway:latest
+    - name: Docker Push
+      run: docker push ${{secrets.DOCKER_USER}}/apigateway:latest
+      
+  publish_windows_image:
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
+    - name: Build the Docker Image
+      run: docker build . --file ApiGateway/Dockerfile --tag ${{secrets.DOCKER_USER}}/apigateway:latest-windows
+    - name: Docker Push
+      run: docker push ${{secrets.DOCKER_USER}}/apigateway:latest-windows
